@@ -20,7 +20,6 @@ func main() {
 	log.Printf("Server started")
 
 	CartApiService := openapi.NewCartApiService()
-	junk
 	CartApiController := openapi.NewCartApiController(CartApiService)
 
 	ImageApiService := openapi.NewImageApiService()
