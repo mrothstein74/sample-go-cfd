@@ -19,12 +19,17 @@ jobs:
     # These next lines define a docker executor: https://circleci.com/docs/2.0/executor-types/
     # You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # A list of available CircleCI docker Convenience Images are available here: https://circleci.com/developer/images/image/cimg/node
-    executor:
-      name: go/default
-      tag: 1.18.5
-    # Then run your tests!
-    # CircleCI will report the results back to your VCS provider.
-    steps:
+      executors:
+      docker:
+          - image: cimg/go:1.19.0
+          - image: cimg/postgres:14.4.0
+            environment:
+              POSTGRES_USER: postgres
+              POSTGRES_PASSWORD: password
+              POSTGRES_DB: cfd
+      # Then run your tests!
+      # CircleCI will report the results back to your VCS provider.
+      steps:
       # Checkout the code as the first step.
       - checkout
       # If using an orb command, explain what it's doing and how it helps the end user.
