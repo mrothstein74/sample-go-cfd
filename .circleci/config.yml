@@ -22,7 +22,7 @@ jobs:
       executors:
       docker:
           - image: cimg/go:1.19.0
-          - image: cimg/postgres:14.4.0
+          - image: cimg/postgres:14.4
             environment:
               POSTGRES_USER: postgres
               POSTGRES_PASSWORD: password
