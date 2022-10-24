@@ -9,7 +9,13 @@
 
 package openapi
 
+import (
+	_ "github.com/hellofresh/health-go/v4/checks/postgres"
+	"gorm.io/gorm"
+)
+
 type MenuItem struct {
+	gorm.Model
 
 	Id int32 `json:"id"`
 
@@ -19,18 +25,18 @@ type MenuItem struct {
 
 	Price float32 `json:"price"`
 
-	// URL to an image of the menu item. This should be the image from the /image endpoint 
+	// URL to an image of the menu item. This should be the image from the /image endpoint
 	ImageId int32 `json:"imageId"`
 }
 
 // AssertMenuItemRequired checks if the required fields are not zero-ed
 func AssertMenuItemRequired(obj MenuItem) error {
 	elements := map[string]interface{}{
-		"id": obj.Id,
+		"id":          obj.Id,
 		"description": obj.Description,
-		"name": obj.Name,
-		"price": obj.Price,
-		"imageId": obj.ImageId,
+		"name":        obj.Name,
+		"price":       obj.Price,
+		"imageId":     obj.ImageId,
 	}
 	for name, el := range elements {
 		if isZero := IsZeroValue(el); isZero {
