@@ -11,8 +11,10 @@ package openapi
 
 import (
 	"context"
-	"net/http"
 	"errors"
+	"net/http"
+
+	_ "github.com/lib/pq"
 )
 
 // MenuApiService is a service that implements the logic for the MenuApiServicer
@@ -42,6 +44,7 @@ func (s *MenuApiService) AddMenuItem(ctx context.Context, menuItem MenuItem) (Im
 
 // ListMenu - List all menu items
 func (s *MenuApiService) ListMenu(ctx context.Context, limit int32) (ImplResponse, error) {
+
 	// TODO - update ListMenu with the required logic for this service method.
 	// Add api_menu_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
 
@@ -50,6 +53,9 @@ func (s *MenuApiService) ListMenu(ctx context.Context, limit int32) (ImplRespons
 
 	//TODO: Uncomment the next line to return response Response(0, Error{}) or use other options such as http.Ok ...
 	//return Response(0, Error{}), nil
+
+	var mi []MenuItem
+	DB.WithContext(ctx).Find(&mi)
 
 	return Response(http.StatusNotImplemented, nil), errors.New("ListMenu method not implemented")
 }

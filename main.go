@@ -10,14 +10,25 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
+	_ "github.com/lib/pq"
+
 	openapi "github.com/mrothstein74/sample-go-cfd/go"
+
+	_ "github.com/hellofresh/health-go/v4/checks/postgres"
 )
 
 func main() {
 	log.Printf("Server started")
+
+	if err := openapi.OpenDb(); err != nil {
+		panic(err)
+	}
+
+	openapi.SeedMenuItems()
 
 	CartApiService := openapi.NewCartApiService()
 	CartApiController := openapi.NewCartApiController(CartApiService)
@@ -30,5 +41,8 @@ func main() {
 
 	router := openapi.NewRouter(CartApiController, ImageApiController, MenuApiController)
 
+	fmt.Println("listening")
+
 	log.Fatal(http.ListenAndServe(":8080", router))
+
 }
